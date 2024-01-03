@@ -1,5 +1,6 @@
 package com.example.springJPA.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -21,5 +22,11 @@ public class Employee {
 
     @OneToOne
     private Address address;
+
+    // @ManyToOne -> Many employees can be mapped to one branch
+    // @JsonIgnoreProperties -> this will not include employeeSet inside Branch response
+    @ManyToOne
+    @JsonIgnoreProperties("employeeSet")
+    private Branch branch;
 
 }
