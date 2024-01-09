@@ -2,12 +2,14 @@ package com.example.springJPA.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 @Entity
 @Setter
 @Getter
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 public class Employee {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -20,7 +22,8 @@ public class Employee {
     @Column(unique = true)
     private String email;
 
-    @OneToOne
+    // CascadeType.ALL means (save address first before saving the details of employee object)
+    @OneToOne(cascade = CascadeType.ALL)
     private Address address;
 
     // @ManyToOne -> Many employees can be mapped to one branch

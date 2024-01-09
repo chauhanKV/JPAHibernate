@@ -1,5 +1,6 @@
 package com.example.springJPA.controller;
 
+import com.example.springJPA.EmployeeDetailDTO;
 import com.example.springJPA.entity.Employee;
 import com.example.springJPA.service.EmployeeService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,9 +15,9 @@ public class EmployeeController {
     private EmployeeService employeeService;
 
     @PostMapping
-    public ResponseEntity<Employee> createEmp(@RequestBody Employee employee)
+    public ResponseEntity<Employee> createEmp(@RequestBody EmployeeDetailDTO employeeDetailDTO)
     {
-        Employee response = employeeService.createEmployee(employee);
+        Employee response = employeeService.createEmployee(employeeDetailDTO);
         return ResponseEntity.ok().body(response);
     }
 
@@ -32,5 +33,12 @@ public class EmployeeController {
     {
         Employee employeeByEmail = employeeService.getEmployeeByEmail(email);
         return ResponseEntity.ok().body(employeeByEmail);
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<String> deleteEmployee(@PathVariable Long id)
+    {
+        Employee emp = employeeService.deleteEmployee(id);
+        return ResponseEntity.ok().body(emp.getName() +" has been deleted.");
     }
 }
